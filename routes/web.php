@@ -32,7 +32,7 @@ Route::group(['prefix' => 'user/'], function () {
     // next week
     Route::get("login", [UserController::class, "login"])->name("login");
     Route::post("process-login", [UserController::class, "processLogin"]);
-    
+
     Route::post("process-logout", [UserController::class, "process-logout"]);
 });
 
@@ -50,11 +50,5 @@ Route::get('/email/verification/{id}', function ($id) {
     return redirect("user/register-success/$id")->withSuccess("Link berhasil di kirim kan kembali!");
 })->middleware(['throttle:6,1'])->name('verification.send');
 
-//route member
-// Route::get('/member', [MemberController::class,'card']);
-// Route::get('/member', [MemberController::class,'list']);//->middleware
-//{['auth']};
- 
-
 Route::get('/member', [MemberController::class, 'card'])->middleware(['auth', 'check-access:0']);
-Route::get('/member/list', [MemberController::class, 'list'])->middleware(['auth',]);
+Route::get('/member/list', [MemberController::class, 'list'])->middleware(['auth', 'check-access:1']);
